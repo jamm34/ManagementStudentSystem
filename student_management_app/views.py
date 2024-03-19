@@ -1,6 +1,7 @@
 from django.contrib.auth import  authenticate, login, logout
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 from student_management_app.EmailBackEnd import EmailBackEnd
 
@@ -23,7 +24,12 @@ def doLogin(request):
                                          password=request.POST.get('password'))
         if user != None:
             login(request,user)
-            return HttpResponseRedirect('/admin_home')
+            if user.user_type=="1":
+                return HttpResponseRedirect('admin_home')
+            if user.user_type=="2":
+                return HttpResponseRedirect(reverse('staff_home'))
+            if user.user_type=="3":
+                return HttpResponseRedirect(reverse('student_home'))
         else:
             messages.error(request, "Invalid login Credentials")
             return HttpResponseRedirect("/")
