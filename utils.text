@@ -1,0 +1,47 @@
+usuarios
+jar_m23@hotmail.com
+gutierrez@gmail.com
+reyesspa@hotmail.com 
+
+BACKLOG
+Backlog Propuesto (MVP -> Producción)
+
+Fase 1: Núcleo Académico (Alta prioridad, 2-3 semanas)
+Matrícula de estudiantes por período.
+Asignación estudiante -> curso/asignatura/sección.
+Registro de asistencia por clase (docente).
+Carga de calificaciones (parciales/final).
+Historial académico básico por estudiante.
+
+Fase 2: Operación y Flujos (Alta prioridad, 1-2 semanas)
+Estados de solicitudes (creada, en revisión, aprobada, rechazada, cerrada).
+Notificaciones internas automáticas.
+Notificaciones por correo (opcional pero recomendado).
+Bitácora de auditoría extendida (CRUD crítico y aprobaciones).
+
+Fase 3: Roles y Permisos (Alta prioridad, 1 semana)
+Definir roles formales: Admin, Coordinador, Docente, Estudiante, Secretaría.
+Permisos granulares por módulo/acción.
+Menú 100% dinámico por permisos en todo el sistema.
+
+Fase 4: Reportes y Dashboard (Media prioridad, 1-2 semanas)
+Reportes de asistencia, permisos y feedback.
+Exportación a Excel/PDF.
+Dashboard con KPIs clave (asistencia, aprobación, pendientes).
+
+Fase 5: UX/UI Completa (Media prioridad, 1-2 semanas)
+Estandarizar componentes (ui-panel, ui-filter, ui-table) en todas las vistas.
+Mejorar formularios (validaciones, ayudas, errores claros).
+QA responsive completo desktop/móvil.
+Estados vacíos, loaders y mensajes unificados.
+
+Fase 6: Seguridad y Calidad (Alta prioridad, 1-2 semanas)
+Recuperación de contraseña y políticas de seguridad.
+Endurecer permisos de archivos/media.
+Tests unitarios e integración en módulos críticos.
+Logging de errores + pipeline CI/CD (lint/test/migrate check).
+
+Fase 7: Producción y Soporte (Media prioridad, 3-5 días)
+Backup y restore documentado.
+Variables de entorno y configuración final de despliegue.
+Manual corto de usuario (Admin/Docente/Estudiante).
