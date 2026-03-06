@@ -1,0 +1,92 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}Bitacora de Acciones{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="ui-panel mb-4">
+      <div class="ui-panel-header"><h3 class="ui-panel-title">Filtros</h3></div>
+      <form method="get" class="ui-filter form-row">
+        <div class="form-group col-md-4">
+          <label>Buscar</label>
+          <input type="text" class="form-control" name="q" value="{{ q }}" placeholder="Usuario, accion, objetivo...">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Tipo de accion</label>
+          <select class="form-control" name="action_type">
+            <option value="">Todas</option>
+            {% for key, label in action_choices %}
+              <option value="{{ key }}" {% if action_type_filter == key %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group col-md-4 d-flex align-items-end">
+          <button class="btn btn-primary mr-2" type="submit">Aplicar</button>
+          <a class="btn btn-light" href="{% url 'audit_log' %}">Limpiar</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="ui-panel">
+      <div class="ui-panel-header"><h3 class="ui-panel-title">Eventos registrados</h3></div>
+      <div class="table-responsive">
+        <table class="table ui-table mb-0">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Usuario</th>
+              <th>Accion</th>
+              <th>Objetivo</th>
+              <th>Descripcion</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in audits %}
+              <tr>
+                <td>{{ item.created_at|date:'d/m/Y H:i' }}</td>
+                <td>
+                  {% if item.actor %}
+                    {{ item.actor.get_full_name|default:item.actor.username }}
+                  {% else %}
+                    Sistema
+                  {% endif %}
+                </td>
+                <td>{{ item.get_action_type_display }}</td>
+                <td>{{ item.target_type }} #{{ item.target_id }}</td>
+                <td>{{ item.description|default:'-' }}</td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="5" class="ui-empty">No hay eventos para los filtros seleccionados.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if page_obj.paginator.num_pages > 1 %}
+      <div class="d-flex justify-content-end mt-3">
+        <nav aria-label="Paginacion bitacora">
+          <ul class="pagination mb-0">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ q|urlencode }}&action_type={{ action_type_filter|urlencode }}">Anterior</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+            {% endif %}
+
+            <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ q|urlencode }}&action_type={{ action_type_filter|urlencode }}">Siguiente</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

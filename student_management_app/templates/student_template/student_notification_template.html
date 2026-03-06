@@ -1,0 +1,39 @@
+{% extends 'student_template/base_template.html' %}
+{% block page_title %}Notificaciones{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="ui-panel">
+      <div class="ui-panel-header">
+        <h3 class="ui-panel-title">Mis notificaciones</h3>
+        <div class="d-flex align-items-center ui-inline-actions">
+          <span class="ui-chip ui-chip-info">Sin leer: {{ unread_count }}</span>
+          {% if unread_count > 0 %}
+            <a href="{% url 'student_notification_mark_all_read' %}" class="btn btn-sm btn-primary">Marcar todas</a>
+          {% endif %}
+        </div>
+      </div>
+      <div>
+        {% for n in notifications %}
+          <div class="alert {% if n.is_read %}alert-secondary{% else %}alert-info{% endif %} d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <strong>{{ n.created_at }}:</strong> {{ n.message }}
+              {% if n.is_read %}
+                <span class="ui-chip ui-chip-info ml-1">Leída</span>
+              {% else %}
+                <span class="ui-chip ui-chip-success ml-1">Nueva</span>
+              {% endif %}
+            </div>
+            {% if not n.is_read %}
+              <a href="{% url 'student_notification_mark_read' notification_id=n.id %}" class="btn btn-sm btn-outline-primary">Marcar leída</a>
+            {% endif %}
+          </div>
+        {% empty %}
+          <p class="text-muted mb-0">No tienes notificaciones.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}
+

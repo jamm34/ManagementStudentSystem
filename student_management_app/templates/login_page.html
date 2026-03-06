@@ -5,88 +5,80 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SMT | Log in</title>
-  <!-- Tell the browser to be responsive to screen width -->
+  <title>SMT | Iniciar sesion</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
-  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- icheck bootstrap -->
   <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false },
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Poppins', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'css/ui-modern.css' %}">
 </head>
-<body class="hold-transition login-page">
-    <div class="login-box" style="width: 500px; margin: auto;">
-        <div class="login-logo">
-          <a href="../../index2.html"><b>Admin</b>SMT</a>
-        </div>
-        <!-- /.login-logo -->
-        <div class="card">
-          <div class="card-body login-card-body" style="font-size: 18px;">
-            <p class="login-box-msg">Sign in to start your session</p>
-      
-            <form action="/doLogin" method="post" 
-            class="form">
-            {% csrf_token %}
-              <div class="input-group mb-6">
-                <input type="email" class="form-control" placeholder="Email" name="email">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <span class="fas fa-envelope"></span>
-                  </div>
-                </div>
+<body class="hold-transition login-page font-sans">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="#"><b>Panel</b>SMT</a>
+    </div>
+
+    <div class="card border-0 shadow-none bg-transparent">
+      <div class="card-body login-card-body text-base">
+        <p class="login-box-msg">Inicia sesion para comenzar</p>
+
+        <form action="/doLogin" method="post" class="form">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="Correo electronico" name="email">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
               </div>
-              <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Password" name="password">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                  </div>
-                </div>
-              </div>
-              <div class="row d-flex justify-content-center">
-                <div class="col-6">
-                  <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                </br>
-                </div>
-                {% if messages %}
-                <div class="col-12">
-                  {% for message in messages %}
-                  {% if message.tags == 'error' %}
-                  <span class="text-danger">{{ message }}</span>
-                  {% endif %}
-                  {% endfor %}
-                </div>
-                {% endif %}
-              </div>
-            </form>
-      
-            <!-- /.social-auth-links -->
-      
-            <p class="mb-1">
-              <a href="forgot-password.html">I forgot my password</a>
-            </p>
-            <p class="mb-0">
-              <a href="register.html" class="text-center">Register </a>
-            </p>
+            </div>
           </div>
-          <!-- /.login-card-body -->
-        </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Contrasena" name="password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <div class="col-6">
+              <button type="submit" class="btn btn-primary btn-block">Iniciar sesion</button>
+            </div>
+            {% if messages %}
+            <div class="col-12 mt-3 text-center">
+              {% for message in messages %}
+              {% if message.tags == 'error' %}
+              <span class="text-danger">{{ message }}</span>
+              {% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </form>
       </div>
-      
-<!-- /.login-box -->
+    </div>
+  </div>
 
-<!-- jQuery -->
-<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
-<!-- Bootstrap 4 -->
-<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 </body>
 </html>

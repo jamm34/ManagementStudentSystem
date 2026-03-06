@@ -1,0 +1,86 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}Permisos de Estudiantes{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="ui-panel mb-4">
+      <div class="ui-panel-header"><h3 class="ui-panel-title">Filtros</h3></div>
+      <form method="get" class="ui-filter form-row">
+        <div class="form-group col-md-3">
+          <label>Estado</label>
+          <select class="form-control" name="status">
+            <option value="todos" {% if status_filter == 'todos' %}selected{% endif %}>Todos</option>
+            <option value="pendiente" {% if status_filter == 'pendiente' %}selected{% endif %}>Pendiente</option>
+            <option value="aprobado" {% if status_filter == 'aprobado' %}selected{% endif %}>Aprobado</option>
+            <option value="rechazado" {% if status_filter == 'rechazado' %}selected{% endif %}>Rechazado</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label>Desde</label>
+          <input type="date" class="form-control" name="start_date" value="{{ start_date_filter }}">
+        </div>
+        <div class="form-group col-md-3">
+          <label>Hasta</label>
+          <input type="date" class="form-control" name="end_date" value="{{ end_date_filter }}">
+        </div>
+        <div class="form-group col-md-3 d-flex align-items-end">
+          <button class="btn btn-primary mr-2" type="submit">Aplicar</button>
+          <a class="btn btn-light" href="{% url 'student_leave_view' %}">Limpiar</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="ui-panel">
+      <div class="table-responsive">
+        <table class="table ui-table mb-0">
+          <thead><tr><th>Estudiante</th><th>Fecha</th><th>Motivo</th><th>Estado</th><th>Accion</th></tr></thead>
+          <tbody>
+            {% for leave in leaves %}
+            <tr>
+              <td>{{ leave.student_id.admin.first_name }} {{ leave.student_id.admin.last_name }}</td>
+              <td>{{ leave.leave_date }}</td>
+              <td>{{ leave.leave_message }}</td>
+              <td>
+                {% if leave.leave_approval_status == 1 %}
+                  <span class="ui-chip ui-chip-success">Aprobado</span>
+                {% elif leave.leave_approval_status == 2 %}
+                  <span class="ui-chip ui-chip-danger">Rechazado</span>
+                {% else %}
+                  <span class="ui-chip ui-chip-pending">Pendiente</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if leave.leave_approval_status == 0 %}
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm js-action-confirm"
+                    data-toggle="modal"
+                    data-target="#actionConfirmModal"
+                    data-action-url="{% url 'student_leave_approve' leave_id=leave.id %}"
+                    data-action-label="Aprobar"
+                    data-action-message="Se aprobara la solicitud de permiso del estudiante."
+                  >Aprobar</button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm js-action-confirm"
+                    data-toggle="modal"
+                    data-target="#actionConfirmModal"
+                    data-action-url="{% url 'student_leave_reject' leave_id=leave.id %}"
+                    data-action-label="Rechazar"
+                    data-action-message="Se rechazara la solicitud de permiso del estudiante."
+                  >Rechazar</button>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="ui-empty">No hay solicitudes de estudiantes.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

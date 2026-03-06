@@ -1,0 +1,37 @@
+﻿{% extends 'hod_template/base_template.html' %}
+{% block page_title %}Seguimiento de Asistencia{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <article class="ui-stat-card p-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-slate-500 mb-1">Registros</p>
+            <h3 class="text-3xl font-bold text-slate-900">{{ attendance_count }}</h3>
+          </div>
+          <span class="ui-stat-icon bg-cyan-100 text-cyan-700"><i class="fas fa-clipboard-list"></i></span>
+        </div>
+      </article>
+      <article class="ui-stat-card p-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-slate-500 mb-1">Asistencias</p>
+            <h3 class="text-3xl font-bold text-slate-900">{{ present_count }}</h3>
+          </div>
+          <span class="ui-stat-icon bg-emerald-100 text-emerald-700"><i class="fas fa-check-circle"></i></span>
+        </div>
+      </article>
+      <article class="ui-stat-card p-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm text-slate-500 mb-1">Ausencias</p>
+            <h3 class="text-3xl font-bold text-slate-900">{{ absent_count }}</h3>
+          </div>
+          <span class="ui-stat-icon bg-rose-100 text-rose-700"><i class="fas fa-times-circle"></i></span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

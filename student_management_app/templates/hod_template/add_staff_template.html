@@ -1,75 +1,67 @@
 {% extends 'hod_template/base_template.html' %}
-{% block page_title %}
-Add Staff
-{% endblock page_title %}
+{% block page_title %}Agregar Personal{% endblock page_title %}
 {% block main_content %}
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Add Staff</h3>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-xl-8">
+        <div class="ui-surface-card p-3 p-md-4 p-xl-5">
+          <div class="ui-panel-header mb-3">
+            <h3 class="ui-panel-title">Nuevo personal</h3>
+          </div>
+
+          <form action="{% url 'add_staff_save' %}" method="post" class="ui-form-layout">
+            {% csrf_token %}
+            <div class="ui-panel mb-4">
+              <div class="ui-panel-header"><h3 class="ui-panel-title">Datos de acceso</h3></div>
+              <div class="ui-form-grid">
+                <div class="ui-field">
+                  <label>Correo electronico</label>
+                  <input type="email" class="form-control" name="email" placeholder="Ingrese correo electronico" required>
+                </div>
+                <div class="ui-field">
+                  <label>Contrasena</label>
+                  <input type="password" class="form-control" name="password" placeholder="Contrasena" required>
+                </div>
+                <div class="ui-field">
+                  <label>Usuario</label>
+                  <input type="text" class="form-control" name="username" placeholder="Usuario" required>
+                </div>
               </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form" action="add_staff_save" method="post">
-                  {% csrf_token %}
-                <div class="card-body">
-                  <div class="form-group">
-                    <label>Email address</label>
-                    <input type="email" class="form-control" name="email" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" placeholder="Password" name="password">
-                  </div>
-                   <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" class="form-control" placeholder="First Name" name="first_name">
-                  </div>
-                   <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" placeholder="Last Name" name="last_name">
-                  </div>
-                   <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control" placeholder="Username" name="username">
-                  </div>
-                  <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="form-control" placeholder="Address" name="address">
-                  </div>
-                      <div class="form-group">
-                      {% if messages %}
-                        {% for message in messages %}
-                        {% if message.tags == 'error' %}
-                        <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
-                        {% endif %}
-                        {% if message.tags == 'success' %}
-                        <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
-                        {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                    </div>
-
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-block">Add Staff</button>
-                </div>
-              </form>
             </div>
-            <!-- /.card -->
 
+            <div class="ui-panel mb-4">
+              <div class="ui-panel-header"><h3 class="ui-panel-title">Perfil</h3></div>
+              <div class="ui-form-grid">
+                <div class="ui-field">
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" name="first_name" placeholder="Nombre" required>
+                </div>
+                <div class="ui-field">
+                  <label>Apellido</label>
+                  <input type="text" class="form-control" name="last_name" placeholder="Apellido" required>
+                </div>
+                <div class="ui-field ui-field-span-2">
+                  <label>Direccion</label>
+                  <input type="text" class="form-control" name="address" placeholder="Direccion">
+                </div>
+              </div>
+            </div>
 
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
 
-          </div>
-          </div>
+            <div class="mt-4 d-flex justify-content-end gap-2">
+              <a href="{% url 'manage_staff' %}" class="btn btn-light">Cancelar</a>
+              <button type="submit" class="btn btn-primary">Guardar personal</button>
+            </div>
+          </form>
+        </div>
       </div>
-    </section>
-    <!-- /.content -->
+    </div>
+  </div>
+</section>
 {% endblock main_content %}

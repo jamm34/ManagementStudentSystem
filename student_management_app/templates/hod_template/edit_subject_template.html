@@ -1,72 +1,59 @@
 {% extends 'hod_template/base_template.html' %}
-{% block page_title %}
-Edit Subject | Subject ID : {{ subject.id }}
-{% endblock page_title %}
+{% block page_title %}Editar Asignatura | ID: {{ subject.id }}{% endblock page_title %}
 {% block main_content %}
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Edit Subject</h3>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-xl-8">
+        <div class="ui-surface-card p-3 p-md-4 p-xl-5">
+          <div class="ui-panel-header mb-3">
+            <h3 class="ui-panel-title">Actualizar asignatura</h3>
+          </div>
+
+          <form action="{% url 'edit_subject_save' %}" method="post" class="ui-form-layout">
+            {% csrf_token %}
+            <input type="hidden" name="subject_id" value="{{ subject.id }}">
+
+            <div class="ui-panel mb-4">
+              <div class="ui-form-grid">
+                <div class="ui-field ui-field-span-2">
+                  <label>Nombre de la asignatura</label>
+                  <input type="text" class="form-control" name="subject_name" value="{{ subject.subject_name }}" required>
+                </div>
+                <div class="ui-field">
+                  <label>Curso</label>
+                  <select class="form-control" name="course" required>
+                    {% for course in courses %}
+                      <option value="{{ course.id }}" {% if course.id == subject.course_id.id %}selected{% endif %}>{{ course.course_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="ui-field">
+                  <label>Personal docente</label>
+                  <select class="form-control" name="staff" required>
+                    {% for staff in staffs %}
+                      <option value="{{ staff.id }}" {% if staff.id == subject.staff_id.id %}selected{% endif %}>{{ staff.first_name }} {{ staff.last_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
               </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form" action="/edit_subject_save" method="post">
-                  {% csrf_token %}
-                <div class="card-body">
-                  <div class="form-group">
-                    <label>Subject Name </label>
-                    <input type="text" class="form-control" name="subject_name" placeholder="Enter Subject" value="{{ subject.subject_name }}">
-                    <input type="hidden" class="form-control" name="subject_id" placeholder="Enter Subject" value="{{ subject.id }}">
-                  </div>
-                   <div class="form-group">
-                    <label>Course </label>
-                    <select class="form-control" name="course">
-                        {% for course in courses %}
-                              <option value="{{ course.id }}" {% if course.id == subject.course_id.id %} selected {% endif %}>{{ course.course_name }}</option>
-                        {% endfor %}
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Staff</label>
-                    <select class="form-control" name="staff">
-                        {% for staff in staffs %}
-                          <option value="{{ staff.id }}" {% if staff.id == subject.staff_id.id %} selected {% endif %}>{{ staff.first_name }} {{ staff.last_name }}</option>
-                        {% endfor %}
-                    </select>
-                  </div>
-                   <div class="form-group">
-                      {% if messages %}
-                        {% for message in messages %}
-                        {% if message.tags == 'error' %}
-                        <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
-                        {% endif %}
-                        {% if message.tags == 'success' %}
-                        <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
-                        {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                    </div>
-
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-block">Save Subject</button>
-                </div>
-              </form>
             </div>
-            <!-- /.card -->
 
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
 
-
-          </div>
-          </div>
+            <div class="mt-4 d-flex justify-content-end gap-2">
+              <a href="{% url 'manage_subject' %}" class="btn btn-light">Volver</a>
+              <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+          </form>
+        </div>
       </div>
-    </section>
-    <!-- /.content -->
+    </div>
+  </div>
+</section>
 {% endblock main_content %}
+
